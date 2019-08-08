@@ -42,7 +42,7 @@ export class DevicesComponent implements OnInit {
     this.dialog.open(LabelConfigDialogComponent, {
       height: '500px',
       width: '900px',
-      // data: this.portal.id //MAYBE: вернуть current?
+      data: this.selection.selected,
     }).afterClosed().subscribe(todo => {
       console.log(`todo: ${todo}`);
     });

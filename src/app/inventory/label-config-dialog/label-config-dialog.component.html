@@ -1,8 +1,50 @@
-<h1 mat-dialog-title>Label Config</h1>
+<h1 mat-dialog-title>Загрузить конфигурацию</h1>
+
 <div mat-dialog-content>
-  <p>fields place</p>
+  <mat-form-field class="example-full-width">
+    <mat-label>Host Name (IP)</mat-label>
+    <input matInput placeholder="Host Name (IP)" [value]="ip" (keyup)="applyFilter($event.target.value)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Label</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let label of labels" [value]="label">
+        {{label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-divider></mat-divider>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="ip">
+      <th mat-header-cell *matHeaderCellDef> IP </th>
+      <td mat-cell *matCellDef="let element"> {{element.ip}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> Config Type </th>
+      <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="version">
+      <th mat-header-cell *matHeaderCellDef> Version </th>
+      <td mat-cell *matCellDef="let element"> {{element.version}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="associatedLabel">
+      <th mat-header-cell *matHeaderCellDef> Associated Label </th>
+      <td mat-cell *matCellDef="let element"> {{element.associatedLabel}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
+
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="null">Cancel</button>
-  <button mat-button cdkFocusInitial [disabled]="false" (click)="save()">Save</button>
+  <button mat-button cdkFocusInitial [disabled]="false" (click)="upload()">Upload</button>
 </div>
