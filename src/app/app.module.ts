@@ -8,19 +8,24 @@ import { MaterialModule } from './material.module';
 import { InventoryComponent } from './inventory/inventory.component';
 import { DevicesComponent } from './inventory/devices/devices.component';
 import { ConfigurationsComponent } from './inventory/configurations/configurations.component';
+import { LabelConfigDialogComponent } from './inventory/label-config-dialog/label-config-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InventoryComponent,
     DevicesComponent,
-    ConfigurationsComponent
+    ConfigurationsComponent,
+    LabelConfigDialogComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
     AppRoutingModule,
+  ],
+  entryComponents: [
+    LabelConfigDialogComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
