@@ -1,7 +1,7 @@
 <mat-toolbar>
 <button mat-button [matMenuTriggerFor]="menu">Команда...</button>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>
+  <button mat-menu-item [disabled]="selection.isEmpty()" (click)="openLabelConfigDialog()">
     <mat-icon>cloud_upload</mat-icon>
     <span>Загрузить версию конфигурации</span>
   </button>

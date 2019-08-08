@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Device, DEVICE_DATA} from '../inventory.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog} from '@angular/material';
+import {LabelConfigDialogComponent} from '../label-config-dialog/label-config-dialog.component';
 
 @Component({
   selector: 'app-devices',
@@ -35,7 +37,18 @@ export class DevicesComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ip}`;
   }
 
-  constructor() { }
+  openLabelConfigDialog(): void {
+    console.log(this.selection.selected);
+    this.dialog.open(LabelConfigDialogComponent, {
+      height: '500px',
+      width: '900px',
+      // data: this.portal.id //MAYBE: вернуть current?
+    }).afterClosed().subscribe(todo => {
+      console.log(`todo: ${todo}`);
+    });
+  }
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
