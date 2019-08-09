@@ -4,6 +4,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material';
 import {LabelConfigDialogComponent} from '../label-config-dialog/label-config-dialog.component';
+import {ConfigEditorDialogComponent} from '../config-editor-dialog/config-editor-dialog.component';
 
 @Component({
   selector: 'app-devices',
@@ -40,6 +41,17 @@ export class DevicesComponent implements OnInit {
   openLabelConfigDialog(): void {
     console.log(this.selection.selected);
     this.dialog.open(LabelConfigDialogComponent, {
+      height: '500px',
+      width: '900px',
+      data: this.selection.selected,
+    }).afterClosed().subscribe(todo => {
+      console.log(`todo: ${todo}`);
+    });
+  }
+
+  openConfigEditorDialog(): void {
+    console.log(this.selection.selected);
+    this.dialog.open(ConfigEditorDialogComponent, {
       height: '500px',
       width: '900px',
       data: this.selection.selected,

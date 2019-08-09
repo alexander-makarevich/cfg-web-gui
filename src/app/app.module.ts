@@ -9,6 +9,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { DevicesComponent } from './inventory/devices/devices.component';
 import { ConfigurationsComponent } from './inventory/configurations/configurations.component';
 import { LabelConfigDialogComponent } from './inventory/label-config-dialog/label-config-dialog.component';
+import { ConfigEditorDialogComponent } from './inventory/config-editor-dialog/config-editor-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { LabelConfigDialogComponent } from './inventory/label-config-dialog/labe
     DevicesComponent,
     ConfigurationsComponent,
     LabelConfigDialogComponent,
+    ConfigEditorDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +27,7 @@ import { LabelConfigDialogComponent } from './inventory/label-config-dialog/labe
     AppRoutingModule,
   ],
   entryComponents: [
+    ConfigEditorDialogComponent,
     LabelConfigDialogComponent,
   ],
   providers: [],
