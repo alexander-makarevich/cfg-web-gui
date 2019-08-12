@@ -8,7 +8,7 @@ import {Draft, DRAFT_DATA} from '../inventory.service';
   styleUrls: ['./drafts.component.scss']
 })
 export class DraftsComponent implements OnInit {
-  displayedColumns: string[] = ['label', 'author'];
+  displayedColumns: string[] = ['id', 'label', 'author'];
   dataSource = new MatTableDataSource<Draft>(DRAFT_DATA);
 
   constructor() { }
