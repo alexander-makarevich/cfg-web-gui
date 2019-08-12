@@ -52,11 +52,10 @@ export class DevicesComponent implements OnInit {
   openConfigEditorDialog(): void {
     console.log(this.selection.selected);
     this.dialog.open(ConfigEditorDialogComponent, {
-      height: '500px',
-      width: '900px',
+      width: '90%',
       data: this.selection.selected,
     }).afterClosed().subscribe(todo => {
-      console.log(`todo: ${todo}`);
+      console.log('todo:', todo);
     });
   }
 

@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Edit as Draft</h2>
 
 <mat-dialog-content>
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="half-width">
     <mat-label>Draft Name</mat-label>
     <input matInput placeholder="Draft Name" [formControl]="draftName">
     <mat-error *ngIf="draftName.hasError('required')">
@@ -9,14 +9,19 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="half-width">
     <mat-label>Annotation</mat-label>
     <textarea matInput placeholder="Annotation" [formControl]="annotation"></textarea>
   </mat-form-field>
 
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="full-width">
     <mat-label>Content</mat-label>
-    <textarea matInput placeholder="Content" [formControl]="content"></textarea>
+    <textarea matInput
+              [formControl]="content"
+              placeholder="Content"
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="20"></textarea>
     <mat-error *ngIf="content.hasError('required')">
       Content is <strong>required</strong>
     </mat-error>
@@ -25,5 +30,5 @@
 
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true">Save</button>
+  <button mat-button (click)="save()">Save</button>
 </mat-dialog-actions>
