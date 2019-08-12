@@ -75,14 +75,23 @@ export const CONFIG_DATA: Configuration[] = [
 
 export const authors = ['Ivanov', 'Petrov', 'Sidorov'];
 
+export interface ShortDraft {
+  label: string;
+  annotation: string;
+  content: string;
+}
+
 export interface Draft {
+  id: number;
   author: string;
   label: string;
+  annotation: string;
+  commands: string[];
 }
 
 export const DRAFT_DATA: Draft[] = [
-  {author: authors[0], label: 'MyNoNameDraft'},
-  {author: authors[1], label: '192.168.1.1-base-config'},
+  {id: 1, author: authors[0], label: 'MyNoNameDraft', annotation: 'Черновик конфигурации устройства 192.168.1.1', commands: commands05},
+  {id: 2, author: authors[1], label: '192.168.1.1-base-config', annotation: 'Черновик базовой рабочей конфигурации устройства 192.168.1.1', commands: commands05},
 ];
 
 
@@ -92,4 +101,18 @@ export const DRAFT_DATA: Draft[] = [
 export class InventoryService {
 
   constructor() { }
+
+  saveDraft(shortDraft: ShortDraft) {
+    const id = DRAFT_DATA.length + 1;
+    const author = authors[id % 3];
+    const draft: Draft = {
+      id,
+      author,
+      label: shortDraft.label,
+      annotation: shortDraft.annotation,
+      commands: shortDraft.content.split('\n'),
+    };
+
+    DRAFT_DATA.push(draft);
+  }
 }

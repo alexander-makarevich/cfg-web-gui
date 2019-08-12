@@ -2,10 +2,10 @@
 
 <mat-dialog-content>
   <mat-form-field class="half-width">
-    <mat-label>Draft Name</mat-label>
-    <input matInput placeholder="Draft Name" [formControl]="draftName">
-    <mat-error *ngIf="draftName.hasError('required')">
-      Draft Name is <strong>required</strong>
+    <mat-label>Label</mat-label>
+    <input matInput placeholder="Label" [formControl]="label">
+    <mat-error *ngIf="label.hasError('required')">
+      Label is <strong>required</strong>
     </mat-error>
   </mat-form-field>
 

@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
-import {Configuration} from '../inventory.service';
+import {Configuration, InventoryService, ShortDraft} from '../inventory.service';
 
 @Component({
   selector: 'app-edit-as-draft-dialog',
@@ -10,11 +10,13 @@ import {Configuration} from '../inventory.service';
   styleUrls: ['./edit-as-draft-dialog.component.scss']
 })
 export class EditAsDraftDialogComponent implements OnInit {
-  draftName = new FormControl('', Validators.required);
+  label = new FormControl('', Validators.required);
   annotation = new FormControl('');
   content = new FormControl('', Validators.required);
 
-  constructor(public dialogRef: MatDialogRef<EditAsDraftDialogComponent>, @Inject(MAT_DIALOG_DATA) public configurations: Configuration[]) {
+  constructor(public dialogRef: MatDialogRef<EditAsDraftDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public configurations: Configuration[],
+              public service: InventoryService) {
   }
 
   ngOnInit() {
@@ -23,8 +25,9 @@ export class EditAsDraftDialogComponent implements OnInit {
   }
 
   save() {
-    // TODO: save by service then close the dialog.
-    this.dialogRef.close({draftName: this.draftName.value, annotation: this.annotation.value, content: this.content.value});
+    const shortDraft: ShortDraft = {label: this.label.value, annotation: this.annotation.value, content: this.content.value};
+    this.service.saveDraft(shortDraft);
+    this.dialogRef.close();
   }
 
 }
