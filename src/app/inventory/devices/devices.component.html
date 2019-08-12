@@ -1,14 +1,6 @@
 <mat-toolbar>
 <button mat-button [matMenuTriggerFor]="menu">Команда...</button>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item [disabled]="selection.isEmpty()" (click)="openLabelConfigDialog()">
-    <mat-icon>cloud_upload</mat-icon>
-    <span>Загрузить конфигурацию</span>
-  </button>
-  <button mat-menu-item [disabled]="selection.isEmpty()" (click)="openConfigEditorDialog()">
-    <mat-icon>edit</mat-icon>
-    <span>Редактировать конфигурацию</span>
-  </button>
 </mat-menu>
 </mat-toolbar>
 

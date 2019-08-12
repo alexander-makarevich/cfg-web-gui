@@ -38,27 +38,6 @@ export class DevicesComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ip}`;
   }
 
-  openLabelConfigDialog(): void {
-    console.log(this.selection.selected);
-    this.dialog.open(LabelConfigDialogComponent, {
-      height: '500px',
-      width: '900px',
-      data: this.selection.selected,
-    }).afterClosed().subscribe(todo => {
-      console.log(`todo: ${todo}`);
-    });
-  }
-
-  openConfigEditorDialog(): void {
-    console.log(this.selection.selected);
-    this.dialog.open(EditAsDraftDialogComponent, {
-      width: '90%',
-      data: this.selection.selected,
-    }).afterClosed().subscribe(todo => {
-      console.log('todo:', todo);
-    });
-  }
-
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {

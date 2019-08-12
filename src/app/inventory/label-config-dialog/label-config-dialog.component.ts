@@ -1,8 +1,9 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
+import {MatTableDataSource} from '@angular/material/table';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Device, CONFIG_DATA} from '../inventory.service';
+
+import {CONFIG_DATA, Configuration} from '../inventory.service';
 
 @Component({
   selector: 'app-label-config-dialog',
@@ -16,16 +17,16 @@ export class LabelConfigDialogComponent implements OnInit {
   displayedColumns: string[] = ['ip', 'type', 'version', 'associatedLabel'];
   dataSource = new MatTableDataSource(CONFIG_DATA);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public devices: Device[], private matDialogRef: MatDialogRef<LabelConfigDialogComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public configurations: Configuration[], private matDialogRef: MatDialogRef<LabelConfigDialogComponent>) { }
 
   upload() {
-    console.log(this.devices);
+    console.log(this.configurations);
     this.matDialogRef.close('todo: data');
   }
 
   ngOnInit() {
-    this.ip = this.devices[0].ip;
-    this.labels = CONFIG_DATA.filter(config => config.ip === this.devices[0].ip).map(config => config.associatedLabel);
+    this.ip = this.configurations[0].ip;
+    this.labels = CONFIG_DATA.filter(config => config.ip === this.configurations[0].ip).map(config => config.associatedLabel);
     this.dataSource.filter = this.ip;
   }
 

@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
-import {CONFIG_DATA, Device} from '../inventory.service';
+import {Configuration} from '../inventory.service';
 
 @Component({
   selector: 'app-edit-as-draft-dialog',
@@ -14,12 +14,11 @@ export class EditAsDraftDialogComponent implements OnInit {
   annotation = new FormControl('');
   content = new FormControl('', Validators.required);
 
-  constructor(public dialogRef: MatDialogRef<EditAsDraftDialogComponent>, @Inject(MAT_DIALOG_DATA) public devices: Device[]) {
+  constructor(public dialogRef: MatDialogRef<EditAsDraftDialogComponent>, @Inject(MAT_DIALOG_DATA) public configurations: Configuration[]) {
   }
 
   ngOnInit() {
-    const lastRunningDeviceConfig = config => config.ip === this.devices[0].ip && config.type.toLocaleLowerCase() === 'running';
-    const commands = CONFIG_DATA.filter(lastRunningDeviceConfig)[0].commands;
+    const commands = this.configurations[0].commands;
     this.content.setValue(commands.join('\n'));
   }
 
