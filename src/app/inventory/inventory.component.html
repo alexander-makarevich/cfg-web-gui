@@ -1,6 +1,10 @@
 <mat-tab-group>
   <mat-tab label="Устройства"><app-devices></app-devices></mat-tab>
-  <mat-tab label="Конфигурации"><app-configurations></app-configurations></mat-tab>
+  <mat-tab label="Конфигурации">
+    <ng-template matTabContent>
+      <app-configurations></app-configurations>
+    </ng-template>
+  </mat-tab>
   <mat-tab label="Drafts">
     <ng-template matTabContent>
       <app-drafts></app-drafts>

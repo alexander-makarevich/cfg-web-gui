@@ -94,6 +94,10 @@ export const DRAFT_DATA: Draft[] = [
   {id: 2, author: authors[1], label: '192.168.1.1-base-config', annotation: 'Черновик базовой рабочей конфигурации устройства 192.168.1.1', commands: commands05},
 ];
 
+const getCurrentDate = () => {
+  const date = new Date();
+  return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+};
 
 @Injectable({
   providedIn: 'root'
@@ -114,5 +118,23 @@ export class InventoryService {
     };
 
     DRAFT_DATA.push(draft);
+  }
+
+  uploadDraft(ip: string, shortDraft: ShortDraft) {
+    const available = CONFIG_DATA.filter(config => config.ip === ip);
+    available.forEach(config => config.type = 'Backup');
+    const versions = available.map(config => +config.version);
+    const version = (Math.max(...versions) + 1).toString();
+
+    const configuration: Configuration = {
+      ip,
+      type: 'Running',
+      capturedOn: getCurrentDate(),
+      version,
+      associatedLabel: null,
+      commands: shortDraft.content.split('\n'),
+    };
+
+    CONFIG_DATA.push(configuration);
   }
 }

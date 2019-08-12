@@ -4,6 +4,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 import {Configuration, InventoryService, ShortDraft} from '../inventory.service';
 
+export enum DialogAction {
+  Cancel = 1,
+  Save,
+  SaveAndUpload,
+}
+
 @Component({
   selector: 'app-edit-as-draft-dialog',
   templateUrl: './edit-as-draft-dialog.component.html',
@@ -28,6 +34,13 @@ export class EditAsDraftDialogComponent implements OnInit {
     const shortDraft: ShortDraft = {label: this.label.value, annotation: this.annotation.value, content: this.content.value};
     this.service.saveDraft(shortDraft);
     this.dialogRef.close();
+  }
+
+  saveAndUpload() {
+    const ip = this.configurations[0].ip;
+    const shortDraft: ShortDraft = {label: this.label.value, annotation: this.annotation.value, content: this.content.value};
+    this.service.uploadDraft(ip, shortDraft);
+    this.dialogRef.close(DialogAction.SaveAndUpload);
   }
 
 }
