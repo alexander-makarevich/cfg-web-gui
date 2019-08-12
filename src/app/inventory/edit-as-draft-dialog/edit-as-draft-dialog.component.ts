@@ -5,16 +5,16 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {CONFIG_DATA, Device} from '../inventory.service';
 
 @Component({
-  selector: 'app-config-editor-dialog',
-  templateUrl: './config-editor-dialog.component.html',
-  styleUrls: ['./config-editor-dialog.component.scss']
+  selector: 'app-edit-as-draft-dialog',
+  templateUrl: './edit-as-draft-dialog.component.html',
+  styleUrls: ['./edit-as-draft-dialog.component.scss']
 })
-export class ConfigEditorDialogComponent implements OnInit {
+export class EditAsDraftDialogComponent implements OnInit {
   draftName = new FormControl('', Validators.required);
   annotation = new FormControl('');
   content = new FormControl('', Validators.required);
 
-  constructor(public dialogRef: MatDialogRef<ConfigEditorDialogComponent>, @Inject(MAT_DIALOG_DATA) public devices: Device[]) {
+  constructor(public dialogRef: MatDialogRef<EditAsDraftDialogComponent>, @Inject(MAT_DIALOG_DATA) public devices: Device[]) {
   }
 
   ngOnInit() {

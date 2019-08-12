@@ -10,7 +10,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { DevicesComponent } from './inventory/devices/devices.component';
 import { ConfigurationsComponent } from './inventory/configurations/configurations.component';
 import { LabelConfigDialogComponent } from './inventory/label-config-dialog/label-config-dialog.component';
-import { ConfigEditorDialogComponent } from './inventory/config-editor-dialog/config-editor-dialog.component';
+import { EditAsDraftDialogComponent } from './inventory/edit-as-draft-dialog/edit-as-draft-dialog.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { ConfigEditorDialogComponent } from './inventory/config-editor-dialog/co
     DevicesComponent,
     ConfigurationsComponent,
     LabelConfigDialogComponent,
-    ConfigEditorDialogComponent,
+    EditAsDraftDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +29,7 @@ import { ConfigEditorDialogComponent } from './inventory/config-editor-dialog/co
     ReactiveFormsModule,
   ],
   entryComponents: [
-    ConfigEditorDialogComponent,
+    EditAsDraftDialogComponent,
     LabelConfigDialogComponent,
   ],
   providers: [],

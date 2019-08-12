@@ -4,7 +4,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material';
 import {LabelConfigDialogComponent} from '../label-config-dialog/label-config-dialog.component';
-import {ConfigEditorDialogComponent} from '../config-editor-dialog/config-editor-dialog.component';
+import {EditAsDraftDialogComponent} from '../edit-as-draft-dialog/edit-as-draft-dialog.component';
 
 @Component({
   selector: 'app-devices',
@@ -51,7 +51,7 @@ export class DevicesComponent implements OnInit {
 
   openConfigEditorDialog(): void {
     console.log(this.selection.selected);
-    this.dialog.open(ConfigEditorDialogComponent, {
+    this.dialog.open(EditAsDraftDialogComponent, {
       width: '90%',
       data: this.selection.selected,
     }).afterClosed().subscribe(todo => {
