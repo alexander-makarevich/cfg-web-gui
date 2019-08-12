@@ -73,6 +73,19 @@ export const CONFIG_DATA: Configuration[] = [
   {ip: '192.168.3.9', type: 'Running', capturedOn: '2019-05-01', version: '1', associatedLabel: 'Baseline'      , commands: commands05},
 ];
 
+export const authors = ['Ivanov', 'Petrov', 'Sidorov'];
+
+export interface Draft {
+  author: string;
+  label: string;
+}
+
+export const DRAFT_DATA: Draft[] = [
+  {author: authors[0], label: 'MyNoNameDraft'},
+  {author: authors[1], label: '192.168.1.1-base-config'},
+];
+
+
 @Injectable({
   providedIn: 'root'
 })

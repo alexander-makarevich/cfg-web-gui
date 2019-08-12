@@ -11,6 +11,7 @@ import { DevicesComponent } from './inventory/devices/devices.component';
 import { ConfigurationsComponent } from './inventory/configurations/configurations.component';
 import { LabelConfigDialogComponent } from './inventory/label-config-dialog/label-config-dialog.component';
 import { EditAsDraftDialogComponent } from './inventory/edit-as-draft-dialog/edit-as-draft-dialog.component';
+import { DraftsComponent } from './inventory/drafts/drafts.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { EditAsDraftDialogComponent } from './inventory/edit-as-draft-dialog/edi
     ConfigurationsComponent,
     LabelConfigDialogComponent,
     EditAsDraftDialogComponent,
+    DraftsComponent,
   ],
   imports: [
     BrowserModule,
