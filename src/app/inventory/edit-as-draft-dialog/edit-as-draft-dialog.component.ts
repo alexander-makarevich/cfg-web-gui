@@ -16,6 +16,7 @@ export enum DialogAction {
   styleUrls: ['./edit-as-draft-dialog.component.scss']
 })
 export class EditAsDraftDialogComponent implements OnInit {
+  ip: string;
   label = new FormControl('', Validators.required);
   annotation = new FormControl('');
   content = new FormControl('', Validators.required);
@@ -26,20 +27,20 @@ export class EditAsDraftDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ip = this.configurations[0].ip;
     const commands = this.configurations[0].commands;
     this.content.setValue(commands.join('\n'));
   }
 
   save() {
-    const shortDraft: ShortDraft = {label: this.label.value, annotation: this.annotation.value, content: this.content.value};
+    const shortDraft: ShortDraft = {ip: this.ip, label: this.label.value, annotation: this.annotation.value, content: this.content.value};
     this.service.saveDraft(shortDraft);
     this.dialogRef.close();
   }
 
   saveAndUpload() {
-    const ip = this.configurations[0].ip;
-    const shortDraft: ShortDraft = {label: this.label.value, annotation: this.annotation.value, content: this.content.value};
-    this.service.uploadDraft(ip, shortDraft);
+    const shortDraft: ShortDraft = {ip: this.ip, label: this.label.value, annotation: this.annotation.value, content: this.content.value};
+    this.service.uploadDraft(shortDraft);
     this.dialogRef.close(DialogAction.SaveAndUpload);
   }
 
