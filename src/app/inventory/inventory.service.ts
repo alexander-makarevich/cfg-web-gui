@@ -105,6 +105,11 @@ const getCurrentDateTime = () => {
   return date + 'T' + time;
 };
 
+export interface LabelIpPair {
+  label: string;
+  ip: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -133,10 +138,11 @@ export class InventoryService {
   /**
    * Is there the label into the configurations or drafts for the ip?
    */
-  isLabelIpPairUnique(ip: string, label: string): Observable<boolean> {
+  isLabelIpPairUnique(ip: string, label: string, pairs: LabelIpPair[] = []): Observable<boolean> {
     const isThereInConfigurations: boolean = this.configurations.some(config => config.ip === ip && config.label === label);
     const isThereInDrafts: boolean = this.drafts.some(draft => draft.ip === ip && draft.label === label);
-    return of(!isThereInConfigurations && !isThereInDrafts);
+    const isThereInPairs: boolean = pairs.some(pair => pair.ip === ip && pair.label === label);
+    return of(!isThereInConfigurations && !isThereInDrafts && !isThereInPairs);
   }
 
   uploadDraft(shortDraft: ShortDraft) {

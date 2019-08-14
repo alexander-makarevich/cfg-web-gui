@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 import {Configuration, InventoryService, ShortDraft} from '../inventory.service';
 import {catchError, map} from 'rxjs/operators';
@@ -23,12 +25,27 @@ export const uniqueLabelIpPairValidator = (service: InventoryService) => {
   };
 };
 
+export interface Fruit {
+  name: string;
+}
+
 @Component({
   selector: 'app-edit-as-draft-dialog',
   templateUrl: './edit-as-draft-dialog.component.html',
   styleUrls: ['./edit-as-draft-dialog.component.scss']
 })
 export class EditAsDraftDialogComponent implements OnInit {
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  labels: string[] = [
+    'Lemon',
+    'Lime',
+    'Apple',
+  ];
+
   formGroup: FormGroup = new FormGroup({
     ip: new FormControl(''),
     label: new FormControl('', [Validators.required]),
@@ -40,6 +57,40 @@ export class EditAsDraftDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public configurations: Configuration[],
               public service: InventoryService) {
   }
+
+  /**
+   * add label to labels chips control
+   */
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our label
+    if ((value || '').trim()) {
+      this.labels.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  /**
+   * remove label from chips labels
+   */
+  remove(label: string): void {
+    const index = this.labels.indexOf(label);
+
+    if (index >= 0) {
+      this.labels.splice(index, 1);
+    }
+  }
+
+  changed(newLabel: string) {
+    console.log(newLabel);
+  }
+
 
   ngOnInit() {
     const commands = this.configurations[0].commands;
