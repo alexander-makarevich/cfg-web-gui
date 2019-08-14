@@ -14,7 +14,7 @@ export class LabelConfigDialogComponent implements OnInit {
   ip: string;
   labels: string[] = ['steak-0', 'pizza-1', 'tacos-2'];
 
-  displayedColumns: string[] = ['ip', 'type', 'version', 'associatedLabel'];
+  displayedColumns: string[] = ['ip', 'type', 'version', 'label'];
   dataSource = new MatTableDataSource(CONFIG_DATA);
 
   constructor(@Inject(MAT_DIALOG_DATA) public configurations: Configuration[], private matDialogRef: MatDialogRef<LabelConfigDialogComponent>) { }
@@ -26,7 +26,7 @@ export class LabelConfigDialogComponent implements OnInit {
 
   ngOnInit() {
     this.ip = this.configurations[0].ip;
-    this.labels = CONFIG_DATA.filter(config => config.ip === this.configurations[0].ip).map(config => config.associatedLabel);
+    this.labels = CONFIG_DATA.filter(config => config.ip === this.configurations[0].ip).map(config => config.label);
     this.dataSource.filter = this.ip;
   }
 

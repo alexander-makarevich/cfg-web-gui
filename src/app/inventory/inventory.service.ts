@@ -39,7 +39,7 @@ export interface Configuration {
   type: string;
   capturedOn: string;
   version: string;
-  associatedLabel: string;
+  label: string;
   commands: string[];
 }
 
@@ -48,30 +48,30 @@ export const commands06: string[] = ['version 15.1', 'service timestamps debug d
 export const commands07: string[] = ['version 15.1', 'service timestamps debug datetime msec', 'hostname CiscoRouter2081', 'boot-start-maker', 'boot-end-maker', 'enable sercer 5 jia8fmm23n32', 'enable password 7 asdfj', 'aaa new-model', 'aaa authentication login default local enable'];
 
 export const CONFIG_DATA: Configuration[] = [
-  {ip: '192.168.1.1', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: null            , commands: commands05},
-  {ip: '192.168.1.2', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: null            , commands: commands05},
-  {ip: '192.168.1.3', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Baseline'      , commands: commands05},
-  {ip: '192.168.1.4', type: 'Backup' , capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: null            , commands: commands05},
-  {ip: '192.168.1.4', type: 'Backup' , capturedOn: '2019-06-01T09:00:00', version: '2', associatedLabel: null            , commands: commands06},
-  {ip: '192.168.1.4', type: 'Running', capturedOn: '2019-07-01T09:00:00', version: '3', associatedLabel: 'Baseline'      , commands: commands07},
-  {ip: '192.168.2.4', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Stable_config' , commands: commands05},
-  {ip: '192.168.2.5', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Baseline'      , commands: commands05},
-  {ip: '192.168.2.6', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Baseline'      , commands: commands05},
-  {ip: '192.168.2.7', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Baseline'      , commands: commands05},
-  {ip: '192.168.2.8', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: null            , commands: commands05},
-  {ip: '192.168.2.9', type: 'Backup' , capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: null            , commands: commands05},
-  {ip: '192.168.2.9', type: 'Running', capturedOn: '2019-06-01T09:00:00', version: '2', associatedLabel: 'Baseline'      , commands: commands06},
-  {ip: '192.168.3.1', type: 'Backup' , capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: null            , commands: commands05},
-  {ip: '192.168.3.1', type: 'Running', capturedOn: '2019-06-01T09:00:00', version: '2', associatedLabel: 'Baseline'      , commands: commands06},
-  {ip: '192.168.3.2', type: 'Backup' , capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: null            , commands: commands05},
-  {ip: '192.168.3.2', type: 'Running', capturedOn: '2019-06-01T09:00:00', version: '2', associatedLabel: 'Baseline'      , commands: commands06},
-  {ip: '192.168.3.3', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: null            , commands: commands05},
-  {ip: '192.168.3.4', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Baseline'      , commands: commands05},
-  {ip: '192.168.3.5', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Stable_config' , commands: commands05},
-  {ip: '192.168.3.6', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Baseline'      , commands: commands05},
-  {ip: '192.168.3.7', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: null            , commands: commands05},
-  {ip: '192.168.3.8', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Baseline'      , commands: commands05},
-  {ip: '192.168.3.9', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', associatedLabel: 'Baseline'      , commands: commands05},
+  {ip: '192.168.1.1', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: null            , commands: commands05},
+  {ip: '192.168.1.2', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: null            , commands: commands05},
+  {ip: '192.168.1.3', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Baseline'      , commands: commands05},
+  {ip: '192.168.1.4', type: 'Backup' , capturedOn: '2019-05-01T09:00:00', version: '1', label: null            , commands: commands05},
+  {ip: '192.168.1.4', type: 'Backup' , capturedOn: '2019-06-01T09:00:00', version: '2', label: null            , commands: commands06},
+  {ip: '192.168.1.4', type: 'Running', capturedOn: '2019-07-01T09:00:00', version: '3', label: 'Baseline'      , commands: commands07},
+  {ip: '192.168.2.4', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Stable_config' , commands: commands05},
+  {ip: '192.168.2.5', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Baseline'      , commands: commands05},
+  {ip: '192.168.2.6', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Baseline'      , commands: commands05},
+  {ip: '192.168.2.7', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Baseline'      , commands: commands05},
+  {ip: '192.168.2.8', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: null            , commands: commands05},
+  {ip: '192.168.2.9', type: 'Backup' , capturedOn: '2019-05-01T09:00:00', version: '1', label: null            , commands: commands05},
+  {ip: '192.168.2.9', type: 'Running', capturedOn: '2019-06-01T09:00:00', version: '2', label: 'Baseline'      , commands: commands06},
+  {ip: '192.168.3.1', type: 'Backup' , capturedOn: '2019-05-01T09:00:00', version: '1', label: null            , commands: commands05},
+  {ip: '192.168.3.1', type: 'Running', capturedOn: '2019-06-01T09:00:00', version: '2', label: 'Baseline'      , commands: commands06},
+  {ip: '192.168.3.2', type: 'Backup' , capturedOn: '2019-05-01T09:00:00', version: '1', label: null            , commands: commands05},
+  {ip: '192.168.3.2', type: 'Running', capturedOn: '2019-06-01T09:00:00', version: '2', label: 'Baseline'      , commands: commands06},
+  {ip: '192.168.3.3', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: null            , commands: commands05},
+  {ip: '192.168.3.4', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Baseline'      , commands: commands05},
+  {ip: '192.168.3.5', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Stable_config' , commands: commands05},
+  {ip: '192.168.3.6', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Baseline'      , commands: commands05},
+  {ip: '192.168.3.7', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: null            , commands: commands05},
+  {ip: '192.168.3.8', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Baseline'      , commands: commands05},
+  {ip: '192.168.3.9', type: 'Running', capturedOn: '2019-05-01T09:00:00', version: '1', label: 'Baseline'      , commands: commands05},
 ];
 
 export const authors = ['Ivanov', 'Petrov', 'Sidorov'];
@@ -134,7 +134,7 @@ export class InventoryService {
    * Is there the label into the configurations or drafts for the ip?
    */
   isLabelIpPairUnique(ip: string, label: string): Observable<boolean> {
-    const isThereInConfigurations: boolean = this.configurations.some(config => config.ip === ip && config.associatedLabel === label);
+    const isThereInConfigurations: boolean = this.configurations.some(config => config.ip === ip && config.label === label);
     const isThereInDrafts: boolean = this.drafts.some(draft => draft.ip === ip && draft.label === label);
     return of(!isThereInConfigurations && !isThereInDrafts);
   }
@@ -150,7 +150,7 @@ export class InventoryService {
       type: 'Running',
       capturedOn: getCurrentDateTime(),
       version,
-      associatedLabel: null,
+      label: shortDraft.label,
       commands: shortDraft.content.split('\n'),
     };
 
