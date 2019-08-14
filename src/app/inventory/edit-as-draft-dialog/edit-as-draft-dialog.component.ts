@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 import {Configuration, InventoryService, ShortDraft} from '../inventory.service';
-import {of} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 
 export enum DialogAction {
   Cancel = 1,
@@ -11,9 +11,15 @@ export enum DialogAction {
   SaveAndUpload,
 }
 
-export const uniqueLabelIpPairValidator = (service: InventoryService, changeRef: ChangeDetectorRef) => {
+export const uniqueLabelIpPairValidator = (service: InventoryService) => {
   return (control: FormGroup) => {
-    return of({uniqueLabelIpPair: true});
+    const ip: string = control.get('ip').value;
+    const label: string = control.get('label').value;
+
+    return service.isLabelIpPairUnique(ip, label).pipe(
+      map(isUnique => (isUnique ? null : {notUniqueLabelIpPair: true})),
+      catchError(() => null),
+    );
   };
 };
 
@@ -28,16 +34,14 @@ export class EditAsDraftDialogComponent implements OnInit {
     label: new FormControl('', [Validators.required]),
     annotation: new FormControl(''),
     content: new FormControl('', Validators.required),
-  }, [], [uniqueLabelIpPairValidator(this.service, this.changeRef)]);
+  }, [], [uniqueLabelIpPairValidator(this.service)]);
 
   constructor(public dialogRef: MatDialogRef<EditAsDraftDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public configurations: Configuration[],
-              public service: InventoryService,
-              private changeRef: ChangeDetectorRef) {
+              public service: InventoryService) {
   }
 
   ngOnInit() {
-    window['fg'] = this.formGroup;
     const commands = this.configurations[0].commands;
     this.formGroup.patchValue({
       ip: this.configurations[0].ip,

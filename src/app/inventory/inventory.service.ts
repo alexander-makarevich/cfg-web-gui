@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
 export interface Device {
   ip: string;
@@ -108,6 +109,8 @@ const getCurrentDateTime = () => {
   providedIn: 'root'
 })
 export class InventoryService {
+  drafts: Draft[] = DRAFT_DATA;
+  configurations: Configuration[] = CONFIG_DATA;
 
   constructor() { }
 
@@ -125,6 +128,15 @@ export class InventoryService {
     };
 
     DRAFT_DATA.push(draft);
+  }
+
+  /**
+   * Is there the label into the configurations or drafts for the ip?
+   */
+  isLabelIpPairUnique(ip: string, label: string): Observable<boolean> {
+    const isThereInConfigurations: boolean = this.configurations.some(config => config.ip === ip && config.associatedLabel === label);
+    const isThereInDrafts: boolean = this.drafts.some(draft => draft.ip === ip && draft.label === label);
+    return of(!isThereInConfigurations && !isThereInDrafts);
   }
 
   uploadDraft(shortDraft: ShortDraft) {

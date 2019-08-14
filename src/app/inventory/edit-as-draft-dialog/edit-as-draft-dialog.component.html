@@ -7,9 +7,8 @@
     <mat-error *ngIf="formGroup.get('label').hasError('required')">
       Label is <strong>required</strong>
     </mat-error>
-    <mat-hint *ngIf="formGroup.hasError('uniqueLabelIpPair')">
-      Почему-то не работает с mat-error
-      Label is <strong>uniqueLabelIpPair</strong>
+    <mat-hint *ngIf="formGroup.hasError('notUniqueLabelIpPair')">
+      Label is <strong>not unique for IP</strong>. Почему-то не работает с mat-error
     </mat-hint>
   </mat-form-field>
 
