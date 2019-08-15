@@ -41,11 +41,7 @@ export class EditAsDraftDialogComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  labels: string[] = [
-    'Lemon',
-    'Lime',
-    'Apple',
-  ];
+  labels: string[] = [];
 
   public hasLabelError = false;
   private labelIsDuplicated$: Observable<boolean>;
