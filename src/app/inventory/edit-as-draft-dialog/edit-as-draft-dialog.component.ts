@@ -67,7 +67,9 @@ export class EditAsDraftDialogComponent implements OnInit {
    * add label to labels chips control
    */
   add(event: MatChipInputEvent): void {
-    if (this.hasLabelError) return;
+    if (this.hasLabelError) {
+      return;
+    }
 
     const input = event.input;
     const value = event.value;
@@ -117,7 +119,7 @@ export class EditAsDraftDialogComponent implements OnInit {
   save() {
     const shortDraft: ShortDraft = {
       ip: this.formGroup.get('ip').value,
-      label: this.formGroup.get('label').value,
+      labels: this.labels,
       annotation: this.formGroup.get('annotation').value,
       content: this.formGroup.get('content').value
     };
@@ -128,7 +130,7 @@ export class EditAsDraftDialogComponent implements OnInit {
   saveAndUpload() {
     const shortDraft: ShortDraft = {
       ip: this.formGroup.get('ip').value,
-      label: this.formGroup.get('label').value,
+      labels: this.labels,
       annotation: this.formGroup.get('annotation').value,
       content: this.formGroup.get('content').value
     };

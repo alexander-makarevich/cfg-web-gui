@@ -13,7 +13,7 @@ import {EditAsDraftDialogComponent, DialogAction} from '../edit-as-draft-dialog/
   styleUrls: ['./configurations.component.scss']
 })
 export class ConfigurationsComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'ip', 'type', 'capturedOn', 'version', 'label'];
+  displayedColumns: string[] = ['select', 'ip', 'type', 'capturedOn', 'version', 'labels'];
   dataSource = new MatTableDataSource<Configuration>(CONFIG_DATA);
   selection = new SelectionModel<Configuration>(true, []);
 
