@@ -14,10 +14,10 @@
              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
              [matChipInputAddOnBlur]="addOnBlur"
              (matChipInputTokenEnd)="add($event)"
-             (input)="changed(newLabel.value)">
+             (input)="validateNewLabel(newLabel.value)">
     </mat-chip-list>
-    <mat-hint>
-      Bugaga
+    <mat-hint *ngIf="labelIsDuplicated$ | async">
+      Label with IP is <strong>duplicated</strong>. Почему-то не работает с mat-error
     </mat-hint>
   </mat-form-field>
 

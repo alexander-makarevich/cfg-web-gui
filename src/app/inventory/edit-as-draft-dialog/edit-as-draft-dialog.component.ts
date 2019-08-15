@@ -5,7 +5,8 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 
 import {Configuration, InventoryService, ShortDraft} from '../inventory.service';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, debounceTime, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
+import {Observable, Subject} from 'rxjs';
 
 export enum DialogAction {
   Cancel = 1,
@@ -18,7 +19,7 @@ export const uniqueLabelIpPairValidator = (service: InventoryService) => {
     const ip: string = control.get('ip').value;
     const label: string = control.get('label').value;
 
-    return service.isLabelIpPairUnique(ip, label).pipe(
+    return service.isLabelIpPairDuplicated(ip, label).pipe(
       map(isUnique => (isUnique ? null : {notUniqueLabelIpPair: true})),
       catchError(() => null),
     );
@@ -46,6 +47,10 @@ export class EditAsDraftDialogComponent implements OnInit {
     'Apple',
   ];
 
+  public hasLabelError = false;
+  private labelIsDuplicated$: Observable<boolean>;
+  private newLabelSource = new Subject<string>();
+
   formGroup: FormGroup = new FormGroup({
     ip: new FormControl(''),
     label: new FormControl('', [Validators.required]),
@@ -62,6 +67,8 @@ export class EditAsDraftDialogComponent implements OnInit {
    * add label to labels chips control
    */
   add(event: MatChipInputEvent): void {
+    if (this.hasLabelError) return;
+
     const input = event.input;
     const value = event.value;
 
@@ -87,8 +94,8 @@ export class EditAsDraftDialogComponent implements OnInit {
     }
   }
 
-  changed(newLabel: string) {
-    console.log(newLabel);
+  validateNewLabel(label: string) {
+    this.newLabelSource.next(label);
   }
 
 
@@ -98,16 +105,33 @@ export class EditAsDraftDialogComponent implements OnInit {
       ip: this.configurations[0].ip,
       content: commands.join('\n'),
     });
+
+    this.labelIsDuplicated$ = this.newLabelSource.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((newLabel: string) => this.service.isLabelIpPairDuplicated('192.168.1.4', newLabel, [])),
+      tap(duplicated => this.hasLabelError = duplicated)
+    );
   }
 
   save() {
-    const shortDraft: ShortDraft = {ip: this.formGroup.get('ip').value, label: this.formGroup.get('label').value, annotation: this.formGroup.get('annotation').value, content: this.formGroup.get('content').value};
+    const shortDraft: ShortDraft = {
+      ip: this.formGroup.get('ip').value,
+      label: this.formGroup.get('label').value,
+      annotation: this.formGroup.get('annotation').value,
+      content: this.formGroup.get('content').value
+    };
     this.service.saveDraft(shortDraft);
     this.dialogRef.close();
   }
 
   saveAndUpload() {
-    const shortDraft: ShortDraft = {ip: this.formGroup.get('ip').value, label: this.formGroup.get('label').value, annotation: this.formGroup.get('annotation').value, content: this.formGroup.get('content').value};
+    const shortDraft: ShortDraft = {
+      ip: this.formGroup.get('ip').value,
+      label: this.formGroup.get('label').value,
+      annotation: this.formGroup.get('annotation').value,
+      content: this.formGroup.get('content').value
+    };
     this.service.uploadDraft(shortDraft);
     this.dialogRef.close(DialogAction.SaveAndUpload);
   }

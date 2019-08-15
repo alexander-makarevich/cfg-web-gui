@@ -138,11 +138,11 @@ export class InventoryService {
   /**
    * Is there the label into the configurations or drafts for the ip?
    */
-  isLabelIpPairUnique(ip: string, label: string, pairs: LabelIpPair[] = []): Observable<boolean> {
+  isLabelIpPairDuplicated(ip: string, label: string, pairs: LabelIpPair[] = []): Observable<boolean> {
     const isThereInConfigurations: boolean = this.configurations.some(config => config.ip === ip && config.label === label);
     const isThereInDrafts: boolean = this.drafts.some(draft => draft.ip === ip && draft.label === label);
     const isThereInPairs: boolean = pairs.some(pair => pair.ip === ip && pair.label === label);
-    return of(!isThereInConfigurations && !isThereInDrafts && !isThereInPairs);
+    return of(isThereInConfigurations || isThereInDrafts || isThereInPairs);
   }
 
   uploadDraft(shortDraft: ShortDraft) {
