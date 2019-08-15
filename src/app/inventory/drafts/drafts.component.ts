@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {SelectionModel} from '@angular/cdk/collections';
+
 import {MatTableDataSource} from '@angular/material';
-import {Draft, DRAFT_DATA} from '../inventory.service';
-import {SelectionModel} from "@angular/cdk/collections";
+import {Draft, InventoryService} from '../inventory.service';
+
 
 @Component({
   selector: 'app-drafts',
@@ -10,7 +12,7 @@ import {SelectionModel} from "@angular/cdk/collections";
 })
 export class DraftsComponent implements OnInit {
   displayedColumns: string[] = ['select', 'id', 'ip', 'labels', 'author', 'updateTime'];
-  dataSource = new MatTableDataSource<Draft>(DRAFT_DATA);
+  dataSource = new MatTableDataSource<Draft>([]);
   selection = new SelectionModel<Draft>(true, []);
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -35,9 +37,19 @@ export class DraftsComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ip}`;
   }
 
-  constructor() { }
+  constructor(private service: InventoryService) {
+  }
 
   ngOnInit() {
+    this.service.getDrafts().subscribe(drafts => this.dataSource.data = drafts);
+  }
+
+  removeDrafts() {
+    this.service.removeDrafts(this.selection.selected)
+      .subscribe(drafts => {
+        this.selection.clear();
+        this.dataSource.data = drafts;
+      });
   }
 
 }

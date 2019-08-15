@@ -440,6 +440,17 @@ export class InventoryService {
 
   constructor() { }
 
+  getDrafts(): Observable<Draft[]> {
+    return of(this.drafts);
+  }
+
+  removeDrafts(removedDrafts: Draft[]): Observable<Draft[]> {
+    this.drafts = this.drafts
+      .filter(draft => !removedDrafts.some(removed => removed.id === draft.id));
+
+    return of(this.drafts);
+  }
+
   saveDraft(shortDraft: ShortDraft) {
     const id = DRAFT_DATA.length + 1;
     const author = authors[id % 3];

@@ -1,3 +1,13 @@
+<mat-toolbar>
+  <button mat-button [matMenuTriggerFor]="menu">Команда...</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [disabled]="selection.isEmpty()" (click)="removeDrafts()">
+      <mat-icon>delete</mat-icon>
+      <span>Удалить</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>
