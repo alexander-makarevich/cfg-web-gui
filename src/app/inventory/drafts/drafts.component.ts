@@ -44,6 +44,10 @@ export class DraftsComponent implements OnInit {
     this.service.getDrafts().subscribe(drafts => this.dataSource.data = drafts);
   }
 
+  openEditDraftDialog() {
+    console.log(this.selection.selected);
+  }
+
   removeDrafts() {
     this.service.removeDrafts(this.selection.selected)
       .subscribe(drafts => {

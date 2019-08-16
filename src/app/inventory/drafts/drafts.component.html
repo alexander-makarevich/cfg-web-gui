@@ -1,6 +1,12 @@
 <mat-toolbar>
   <button mat-button [matMenuTriggerFor]="menu">Команда...</button>
   <mat-menu #menu="matMenu">
+    <div matTooltip="Selected not one draft" [matTooltipDisabled]="selection.selected.length === 1">
+      <button mat-menu-item [disabled]="selection.selected.length !== 1" (click)="openEditDraftDialog()">
+        <mat-icon>edit</mat-icon>
+        <span>Редактировать черновик</span>
+      </button>
+    </div>
     <button mat-menu-item [disabled]="selection.isEmpty()" (click)="removeDrafts()">
       <mat-icon>delete</mat-icon>
       <span>Удалить</span>
