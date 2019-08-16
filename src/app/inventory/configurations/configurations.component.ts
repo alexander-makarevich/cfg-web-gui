@@ -4,7 +4,12 @@ import {MatDialog, MatTableDataSource} from '@angular/material';
 
 import {CONFIG_DATA, Configuration} from '../inventory.service';
 import {LabelConfigDialogComponent} from '../label-config-dialog/label-config-dialog.component';
-import {EditAsDraftDialogComponent, DialogAction} from '../edit-as-draft-dialog/edit-as-draft-dialog.component';
+import {
+  DialogAction,
+  DialogData,
+  DialogType,
+  EditAsDraftDialogComponent
+} from '../edit-as-draft-dialog/edit-as-draft-dialog.component';
 
 
 @Component({
@@ -56,10 +61,14 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   openEditAsDraftDialog(): void {
-    console.log(this.selection.selected);
+    const data: DialogData = {
+      type: DialogType.EditConfigurationAsDraft,
+      configurations: this.selection.selected,
+    };
+
     this.dialog.open(EditAsDraftDialogComponent, {
       width: '90%',
-      data: this.selection.selected,
+      data,
     }).afterClosed().subscribe(action => {
       if (action === DialogAction.SaveAndUpload) {
         this.dataSource.data = CONFIG_DATA;

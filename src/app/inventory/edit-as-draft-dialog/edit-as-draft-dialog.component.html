@@ -1,4 +1,6 @@
-<h2 mat-dialog-title>Edit as Draft</h2>
+<h2 *ngIf="data.type === DialogType.EditConfigurationAsDraft" mat-dialog-title>Edit as Draft</h2>
+<h2 *ngIf="data.type === DialogType.EditDraft" mat-dialog-title>Edit Draft</h2>
+<h2 *ngIf="data.type === DialogType.CreateNewDraft" mat-dialog-title>Create Draft</h2>
 
 <mat-dialog-content [formGroup]="formGroup">
   <mat-form-field class="half-width">

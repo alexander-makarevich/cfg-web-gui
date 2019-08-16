@@ -14,6 +14,17 @@ export enum DialogAction {
   SaveAndUpload,
 }
 
+export enum DialogType {
+  EditConfigurationAsDraft = 0,
+  EditDraft,
+  CreateNewDraft,
+}
+
+export interface DialogData {
+  type: DialogType;
+  configurations: Configuration[];
+}
+
 export const uniqueLabelIpPairValidator = (service: InventoryService) => {
   return (control: FormGroup) => {
     const ip: string = control.get('ip').value;
@@ -54,8 +65,10 @@ export class EditAsDraftDialogComponent implements OnInit {
     content: new FormControl('', Validators.required),
   }, [], [uniqueLabelIpPairValidator(this.service)]);
 
+  DialogType = DialogType;
+
   constructor(public dialogRef: MatDialogRef<EditAsDraftDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public configurations: Configuration[],
+              @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public service: InventoryService) {
   }
 
@@ -98,9 +111,9 @@ export class EditAsDraftDialogComponent implements OnInit {
 
 
   ngOnInit() {
-    const commands = this.configurations[0].commands;
+    const commands = this.data.configurations[0].commands;
     this.formGroup.patchValue({
-      ip: this.configurations[0].ip,
+      ip: this.data.configurations[0].ip,
       content: commands.join('\n'),
     });
 
