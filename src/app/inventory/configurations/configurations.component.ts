@@ -8,7 +8,7 @@ import {
   DialogAction,
   DialogData,
   DialogType,
-  EditAsDraftDialogComponent
+  EditAsDraftDialogComponent, transformConfigurationToShortDraft
 } from '../edit-as-draft-dialog/edit-as-draft-dialog.component';
 
 
@@ -44,7 +44,8 @@ export class ConfigurationsComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ip}`;
   }
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) {
+  }
 
   ngOnInit() {
   }
@@ -63,7 +64,7 @@ export class ConfigurationsComponent implements OnInit {
   openEditAsDraftDialog(): void {
     const data: DialogData = {
       type: DialogType.EditConfigurationAsDraft,
-      configurations: this.selection.selected,
+      shortDraft: transformConfigurationToShortDraft(this.selection.selected[0]),
     };
 
     this.dialog.open(EditAsDraftDialogComponent, {

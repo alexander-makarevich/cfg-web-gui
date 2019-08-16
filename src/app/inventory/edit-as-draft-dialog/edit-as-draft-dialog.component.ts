@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 
-import {Configuration, InventoryService, ShortDraft} from '../inventory.service';
+import {Configuration, Draft, InventoryService, ShortDraft} from '../inventory.service';
 import {catchError, debounceTime, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 
@@ -20,9 +20,34 @@ export enum DialogType {
   CreateNewDraft,
 }
 
+export function transformConfigurationToShortDraft(configuration: Configuration): ShortDraft {
+  return {
+    draftId: null,
+    annotation: '',
+    ip: configuration.ip,
+    labels: [],
+    content: configuration.commands.join('\n'),
+  }
+}
+
+export function transformDraftToShortDraft(draft: Draft): ShortDraft {
+  return {
+    draftId: draft.id,
+    annotation: draft.annotation,
+    ip: draft.ip,
+    labels: draft.labels,
+    content: draft.commands.join('\n'),
+  }
+}
+
 export interface DialogData {
   type: DialogType;
-  configurations: Configuration[];
+  shortDraft: ShortDraft;
+}
+
+export interface ReturnedDialogData {
+  action: DialogAction;
+  allAvailableDrafts: Draft[] | null;
 }
 
 export const uniqueLabelIpPairValidator = (service: InventoryService) => {
@@ -111,10 +136,12 @@ export class EditAsDraftDialogComponent implements OnInit {
 
 
   ngOnInit() {
-    const commands = this.data.configurations[0].commands;
+    this.labels = this.data.type === DialogType.EditDraft ? [...this.data.shortDraft.labels] : [];
+
     this.formGroup.patchValue({
-      ip: this.data.configurations[0].ip,
-      content: commands.join('\n'),
+      ip: this.data.shortDraft.ip,
+      content: this.data.shortDraft.content,
+      annotation: this.data.type === DialogType.EditDraft ? this.data.shortDraft.annotation : '',
     });
 
     this.labelIsDuplicated$ = this.newLabelSource.pipe(
@@ -127,17 +154,35 @@ export class EditAsDraftDialogComponent implements OnInit {
 
   save() {
     const shortDraft: ShortDraft = {
+      draftId: this.data.shortDraft.draftId,
       ip: this.formGroup.get('ip').value,
       labels: this.labels,
       annotation: this.formGroup.get('annotation').value,
       content: this.formGroup.get('content').value
     };
-    this.service.saveDraft(shortDraft);
-    this.dialogRef.close();
+
+    switch (this.data.type) {
+      case DialogType.EditDraft: {
+        this.service.saveDraft(shortDraft).subscribe(drafts => {
+          const ret: ReturnedDialogData = {
+            action: DialogAction.Save,
+            allAvailableDrafts: drafts,
+          };
+
+          this.dialogRef.close(ret);
+        });
+      } break;
+
+      case DialogType.CreateNewDraft:
+      case DialogType.EditConfigurationAsDraft: {
+        this.service.createDraft(shortDraft).subscribe(() => this.dialogRef.close());
+      } break;
+    }
   }
 
   saveAndUpload() {
     const shortDraft: ShortDraft = {
+      draftId: null,
       ip: this.formGroup.get('ip').value,
       labels: this.labels,
       annotation: this.formGroup.get('annotation').value,

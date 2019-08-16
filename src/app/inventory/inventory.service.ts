@@ -377,6 +377,7 @@ export const CONFIG_DATA: Configuration[] = [{
 export const authors = ['Ivanov', 'Petrov', 'Sidorov'];
 
 export interface ShortDraft {
+  draftId: number | null;
   ip: string;
   labels: string[];
   annotation: string;
@@ -451,7 +452,7 @@ export class InventoryService {
     return of(this.drafts);
   }
 
-  saveDraft(shortDraft: ShortDraft) {
+  createDraft(shortDraft: ShortDraft): Observable<any> {
     const id = DRAFT_DATA.length + 1;
     const author = authors[id % 3];
     const draft: Draft = {
@@ -465,6 +466,25 @@ export class InventoryService {
     };
 
     this.drafts.push(draft);
+
+    return of(null);
+  }
+
+  saveDraft(shortDraft: ShortDraft): Observable<Draft[]>{
+    const author = authors[shortDraft.draftId % 3];
+    const draft: Draft = {
+      id: shortDraft.draftId,
+      author,
+      ip: shortDraft.ip,
+      updateTime: getCurrentDateTime(),
+      labels: shortDraft.labels,
+      annotation: shortDraft.annotation,
+      commands: shortDraft.content.split('\n'),
+    };
+
+    this.drafts[shortDraft.draftId] = draft;
+
+    return of(this.drafts);
   }
 
   /**

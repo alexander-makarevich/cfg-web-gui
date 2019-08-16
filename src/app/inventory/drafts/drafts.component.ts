@@ -1,8 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 
-import {MatTableDataSource} from '@angular/material';
-import {Draft, InventoryService} from '../inventory.service';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {CONFIG_DATA, Draft, InventoryService} from '../inventory.service';
+import {
+  DialogAction,
+  DialogData,
+  DialogType,
+  EditAsDraftDialogComponent,
+  transformDraftToShortDraft
+} from "../edit-as-draft-dialog/edit-as-draft-dialog.component";
 
 
 @Component({
@@ -37,7 +44,8 @@ export class DraftsComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ip}`;
   }
 
-  constructor(private service: InventoryService) {
+  constructor(private service: InventoryService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -46,6 +54,19 @@ export class DraftsComponent implements OnInit {
 
   openEditDraftDialog() {
     console.log(this.selection.selected);
+    const data: DialogData = {
+      type: DialogType.EditDraft,
+      shortDraft: transformDraftToShortDraft(this.selection.selected[0]),
+    };
+
+    this.dialog.open(EditAsDraftDialogComponent, {
+      width: '90%',
+      data,
+    }).afterClosed().subscribe(ret => {
+      if (ret.action === DialogAction.Save) {
+        this.dataSource.data = ret.allAvailableDrafts;
+      }
+    });
   }
 
   removeDrafts() {
