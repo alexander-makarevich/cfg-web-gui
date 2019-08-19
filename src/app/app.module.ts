@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { ConfigurationsComponent } from './inventory/configurations/configuratio
 import { LabelConfigDialogComponent } from './inventory/label-config-dialog/label-config-dialog.component';
 import { EditAsDraftDialogComponent } from './inventory/edit-as-draft-dialog/edit-as-draft-dialog.component';
 import { DraftsComponent } from './inventory/drafts/drafts.component';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,8 @@ import { DraftsComponent } from './inventory/drafts/drafts.component';
     MaterialModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
+    MonacoEditorModule.forRoot() // use forRoot() in main app module only.
   ],
   entryComponents: [
     EditAsDraftDialogComponent,
