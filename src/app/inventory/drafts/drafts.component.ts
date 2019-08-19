@@ -62,10 +62,12 @@ export class DraftsComponent implements OnInit {
     this.dialog.open(EditAsDraftDialogComponent, {
       width: '90%',
       data,
-    }).afterClosed().subscribe(ret => {
-      if (ret.action === DialogAction.Save) {
-        this.dataSource.data = ret.allAvailableDrafts;
-        this.selection.clear();
+    }).afterClosed().subscribe(action => {
+      if (action === DialogAction.Save || action === DialogAction.SaveAndUpload) {
+        this.service.getDrafts().subscribe(drafts => {
+          this.selection.clear();
+          this.dataSource.data = drafts;
+        });
       }
     });
   }

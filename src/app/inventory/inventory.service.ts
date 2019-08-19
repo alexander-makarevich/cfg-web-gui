@@ -470,7 +470,7 @@ export class InventoryService {
     return of(null);
   }
 
-  saveDraft(shortDraft: ShortDraft): Observable<Draft[]>{
+  saveDraft(shortDraft: ShortDraft): Observable<any>{
     const author = authors[shortDraft.draftId % 3];
     const draft: Draft = {
       id: shortDraft.draftId,
@@ -485,7 +485,7 @@ export class InventoryService {
     const id: number = this.drafts.findIndex(draft => draft.id === shortDraft.draftId);
     this.drafts[id] = draft;
 
-    return of(this.drafts);
+    return of(null);
   }
 
   /**
@@ -500,7 +500,7 @@ export class InventoryService {
     return of(isThereInConfigurations || isThereInDrafts || isThereInPairs);
   }
 
-  uploadDraft(shortDraft: ShortDraft) {
+  uploadDraft(shortDraft: ShortDraft): Observable<any> {
     const available = CONFIG_DATA.filter(config => config.ip === shortDraft.ip);
     available.forEach(config => config.type = 'Backup');
     const versions = available.map(config => +config.version);
@@ -516,5 +516,10 @@ export class InventoryService {
     };
 
     CONFIG_DATA.push(configuration);
+
+    const id: number = this.drafts.findIndex(draft => draft.id === shortDraft.draftId);
+    DRAFT_DATA.splice(id, 1);
+
+    return of(null);
   }
 }

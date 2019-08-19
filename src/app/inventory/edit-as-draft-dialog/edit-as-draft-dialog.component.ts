@@ -163,14 +163,7 @@ export class EditAsDraftDialogComponent implements OnInit {
 
     switch (this.data.type) {
       case DialogType.EditDraft: {
-        this.service.saveDraft(shortDraft).subscribe(drafts => {
-          const ret: ReturnedDialogData = {
-            action: DialogAction.Save,
-            allAvailableDrafts: drafts,
-          };
-
-          this.dialogRef.close(ret);
-        });
+        this.service.saveDraft(shortDraft).subscribe(() => this.dialogRef.close(DialogAction.Save));
       } break;
 
       case DialogType.CreateNewDraft:
@@ -182,14 +175,14 @@ export class EditAsDraftDialogComponent implements OnInit {
 
   saveAndUpload() {
     const shortDraft: ShortDraft = {
-      draftId: null,
+      draftId: this.data.type === DialogType.EditDraft ? this.data.shortDraft.draftId : null,
       ip: this.formGroup.get('ip').value,
       labels: this.labels,
       annotation: this.formGroup.get('annotation').value,
       content: this.formGroup.get('content').value
     };
-    this.service.uploadDraft(shortDraft);
-    this.dialogRef.close(DialogAction.SaveAndUpload);
+
+    this.service.uploadDraft(shortDraft).subscribe(() => this.dialogRef.close(DialogAction.SaveAndUpload));
   }
 
 }
