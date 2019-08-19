@@ -470,9 +470,9 @@ export class InventoryService {
     return of(null);
   }
 
-  saveDraft(shortDraft: ShortDraft): Observable<any>{
+  saveDraft(shortDraft: ShortDraft): Observable<any> {
     const author = authors[shortDraft.draftId % 3];
-    const draft: Draft = {
+    const changedDraft: Draft = {
       id: shortDraft.draftId,
       author,
       ip: shortDraft.ip,
@@ -483,7 +483,7 @@ export class InventoryService {
     };
 
     const id: number = this.drafts.findIndex(draft => draft.id === shortDraft.draftId);
-    this.drafts[id] = draft;
+    this.drafts[id] = changedDraft;
 
     return of(null);
   }

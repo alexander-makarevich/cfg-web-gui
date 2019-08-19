@@ -9,7 +9,7 @@ import {
   DialogType,
   EditAsDraftDialogComponent,
   transformDraftToShortDraft
-} from "../edit-as-draft-dialog/edit-as-draft-dialog.component";
+} from '../edit-as-draft-dialog/edit-as-draft-dialog.component';
 
 
 @Component({

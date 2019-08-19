@@ -27,7 +27,7 @@ export function transformConfigurationToShortDraft(configuration: Configuration)
     ip: configuration.ip,
     labels: [],
     content: configuration.commands.join('\n'),
-  }
+  };
 }
 
 export function transformDraftToShortDraft(draft: Draft): ShortDraft {
@@ -37,7 +37,7 @@ export function transformDraftToShortDraft(draft: Draft): ShortDraft {
     ip: draft.ip,
     labels: draft.labels,
     content: draft.commands.join('\n'),
-  }
+  };
 }
 
 export interface DialogData {
@@ -72,6 +72,8 @@ export interface Fruit {
   styleUrls: ['./edit-as-draft-dialog.component.scss']
 })
 export class EditAsDraftDialogComponent implements OnInit {
+  editorOptions = {theme: 'vs-dark', language: 'javascript'};
+
   visible = true;
   selectable = true;
   removable = true;
@@ -88,6 +90,7 @@ export class EditAsDraftDialogComponent implements OnInit {
     label: new FormControl('', [Validators.required]),
     annotation: new FormControl(''),
     content: new FormControl('', Validators.required),
+    code: new FormControl('function x() {\nconsole.log("Hello world!");\n}', Validators.required),
   }, [], [uniqueLabelIpPairValidator(this.service)]);
 
   DialogType = DialogType;
@@ -162,14 +165,14 @@ export class EditAsDraftDialogComponent implements OnInit {
     };
 
     switch (this.data.type) {
-      case DialogType.EditDraft: {
+      case DialogType.EditDraft:
         this.service.saveDraft(shortDraft).subscribe(() => this.dialogRef.close(DialogAction.Save));
-      } break;
+        break;
 
       case DialogType.CreateNewDraft:
-      case DialogType.EditConfigurationAsDraft: {
+      case DialogType.EditConfigurationAsDraft:
         this.service.createDraft(shortDraft).subscribe(() => this.dialogRef.close());
-      } break;
+        break;
     }
   }
 
