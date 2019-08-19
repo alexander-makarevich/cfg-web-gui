@@ -482,7 +482,8 @@ export class InventoryService {
       commands: shortDraft.content.split('\n'),
     };
 
-    this.drafts[shortDraft.draftId] = draft;
+    const id: number = this.drafts.findIndex(draft => draft.id === shortDraft.draftId);
+    this.drafts[id] = draft;
 
     return of(this.drafts);
   }

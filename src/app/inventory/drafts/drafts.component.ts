@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 
 import {MatDialog, MatTableDataSource} from '@angular/material';
-import {CONFIG_DATA, Draft, InventoryService} from '../inventory.service';
+import {Draft, InventoryService} from '../inventory.service';
 import {
   DialogAction,
   DialogData,
@@ -65,6 +65,7 @@ export class DraftsComponent implements OnInit {
     }).afterClosed().subscribe(ret => {
       if (ret.action === DialogAction.Save) {
         this.dataSource.data = ret.allAvailableDrafts;
+        this.selection.clear();
       }
     });
   }
