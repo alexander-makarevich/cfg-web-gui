@@ -5,7 +5,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 
 import {Configuration, Draft, InventoryService, ShortDraft} from '../inventory.service';
-import {catchError, debounceTime, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 
 export enum DialogAction {
@@ -50,18 +50,6 @@ export interface ReturnedDialogData {
   allAvailableDrafts: Draft[] | null;
 }
 
-export const uniqueLabelIpPairValidator = (service: InventoryService) => {
-  return (control: FormGroup) => {
-    const ip: string = control.get('ip').value;
-    const label: string = control.get('label').value;
-
-    return service.isLabelIpPairDuplicated(ip, label).pipe(
-      map(isUnique => (isUnique ? null : {notUniqueLabelIpPair: true})),
-      catchError(() => null),
-    );
-  };
-};
-
 export interface Fruit {
   name: string;
 }
@@ -87,17 +75,21 @@ export class EditAsDraftDialogComponent implements OnInit {
 
   formGroup: FormGroup = new FormGroup({
     ip: new FormControl(''),
-    label: new FormControl('', [Validators.required]),
     annotation: new FormControl(''),
     content: new FormControl('', Validators.required),
     code: new FormControl('function x() {\nconsole.log("Hello world!");\n}', Validators.required),
-  }, [], [uniqueLabelIpPairValidator(this.service)]);
+  });
 
   DialogType = DialogType;
 
   constructor(public dialogRef: MatDialogRef<EditAsDraftDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public service: InventoryService) {
+  }
+
+  onInit(editor) {
+    const line = editor.getPosition();
+    console.log(line);
   }
 
   /**

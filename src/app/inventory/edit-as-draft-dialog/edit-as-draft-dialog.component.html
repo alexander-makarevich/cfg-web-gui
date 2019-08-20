@@ -24,34 +24,11 @@
   </mat-form-field>
 
   <mat-form-field class="half-width">
-    <mat-label>Label</mat-label>
-    <input matInput placeholder="Label" formControlName="label">
-    <mat-error *ngIf="formGroup.get('label').hasError('required')">
-      Label is <strong>required</strong>
-    </mat-error>
-    <mat-hint *ngIf="formGroup.hasError('notUniqueLabelIpPair')">
-      Label is <strong>not unique for IP</strong>. Почему-то не работает с mat-error
-    </mat-hint>
-  </mat-form-field>
-
-  <mat-form-field class="half-width">
     <mat-label>Annotation</mat-label>
     <textarea matInput placeholder="Annotation" formControlName="annotation"></textarea>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <mat-label>Content</mat-label>
-    <textarea matInput
-              formControlName="content"
-              placeholder="Content"
-              cdkTextareaAutosize
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="20"></textarea>
-    <mat-error *ngIf="formGroup.get('content').hasError('required')">
-      Content is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <ngx-monaco-editor [options]="editorOptions" formControlName="code"></ngx-monaco-editor>
+  <ngx-monaco-editor class="my-code-editor" (onInit)="onInit($event)" [options]="editorOptions" formControlName="content"></ngx-monaco-editor>
 </mat-dialog-content>
 
 <mat-dialog-actions>
