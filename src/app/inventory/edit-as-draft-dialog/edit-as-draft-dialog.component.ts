@@ -60,7 +60,7 @@ export interface Fruit {
   styleUrls: ['./edit-as-draft-dialog.component.scss']
 })
 export class EditAsDraftDialogComponent implements OnInit {
-  editorOptions = {theme: 'vs-dark', language: 'javascript'};
+  editorOptions = {theme: 'vs', language: 'shell'};
 
   visible = true;
   selectable = true;
