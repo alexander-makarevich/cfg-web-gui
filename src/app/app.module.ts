@@ -13,11 +13,62 @@ import {LabelConfigDialogComponent} from './inventory/label-config-dialog/label-
 import {EditAsDraftDialogComponent} from './inventory/edit-as-draft-dialog/edit-as-draft-dialog.component';
 import {DraftsComponent} from './inventory/drafts/drafts.component';
 import {MonacoEditorModule, NgxMonacoEditorConfig} from 'ngx-monaco-editor';
+import {of} from "rxjs";
 
 const monacoConfig: NgxMonacoEditorConfig = {
   defaultOptions: { scrollBeyondLastLine: false, automaticLayout: true }, // pass default options to be used
   // here monaco object will be available as window.monaco use this function to extend monaco editor functionalities.
-  onMonacoLoad: () => { console.log((window as any).monaco); }
+  onMonacoLoad: () => {
+    debugger;
+    monaco.languages.register({
+      id: "colorLanguage"
+    });
+
+    monaco.languages.registerColorProvider("colorLanguage", {
+      provideColorPresentations: () => {
+        return [
+          {
+            label: "color picker title text"
+          }
+        ];
+      },
+
+      provideDocumentColors: () => {
+        return of([
+            {
+              color: { red: 255, blue: 0, green: 0, alpha: 1},
+              range:{
+                startLineNumber: 1,
+                startColumn: 0,
+                endLineNumber: 1,
+                endColumn: 0
+              }
+            },
+            {
+              color: { red: 0, blue: 255, green: 0, alpha: 1},
+              range:{
+                startLineNumber: 2,
+                startColumn: 0,
+                endLineNumber: 2,
+                endColumn: 0
+              }
+            },
+            {
+              color: { red: 0, blue: 0, green: 255, alpha: 1},
+              range:{
+                startLineNumber: 3,
+                startColumn: 0,
+                endLineNumber: 3,
+                endColumn: 0
+              }
+            }
+        ]).toPromise();
+      }
+
+    });
+
+    console.log((window as any).monaco);
+  }
 };
 
 @NgModule({

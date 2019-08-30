@@ -60,7 +60,9 @@ export interface Fruit {
   styleUrls: ['./edit-as-draft-dialog.component.scss']
 })
 export class EditAsDraftDialogComponent implements OnInit {
-  editorOptions = {theme: 'vs', language: 'shell'};
+  // editorOptions = {theme: 'vs', language: 'shell'};
+  editorOptions = {theme: 'vs', language: 'colorLanguage', colorDecorators: true, };
+  editorValue = 'red\nblue\ngreen';
 
   visible = true;
   selectable = true;
@@ -135,7 +137,7 @@ export class EditAsDraftDialogComponent implements OnInit {
 
     this.formGroup.patchValue({
       ip: this.data.shortDraft.ip,
-      content: this.data.shortDraft.content,
+      content: this.editorValue,// this.data.shortDraft.content,
       annotation: this.data.type === DialogType.EditDraft ? this.data.shortDraft.annotation : '',
     });
 
