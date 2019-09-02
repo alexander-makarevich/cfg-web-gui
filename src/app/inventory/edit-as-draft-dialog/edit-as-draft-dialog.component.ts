@@ -8,6 +8,7 @@ import {Configuration, Draft, InventoryService, ShortDraft} from '../inventory.s
 import {debounceTime, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 import {clishLanguageId} from "./monaco-editor-config";
+import {ClishService} from "./clish.service";
 
 export enum DialogAction {
   Cancel = 1,
@@ -87,12 +88,27 @@ export class EditAsDraftDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<EditAsDraftDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,
-              public service: InventoryService) {
+              public inventoryService: InventoryService,
+              private clishService: ClishService) {
   }
 
   onInit(editor) {
-    const line = editor.getPosition();
-    console.log(line);
+    const model = editor.getModel();
+    model.onDidChangeContent((a) => {
+      const v = editor.getValue();
+      this.clishService.getMarkers(v)
+        .subscribe(markers => monaco.editor.setModelMarkers(model, clishLanguageId, markers));
+    });
+
+    const marker: monaco.editor.IMarkerData = {
+      endColumn: 34,
+      endLineNumber: 8,
+      message: 'Invalid IP address',
+      severity: monaco.MarkerSeverity.Error,
+      startColumn: 20,
+      startLineNumber: 8,
+    };
+    monaco.editor.setModelMarkers(model, clishLanguageId, [marker]);
   }
 
   /**
@@ -145,7 +161,7 @@ export class EditAsDraftDialogComponent implements OnInit {
     this.labelIsDuplicated$ = this.newLabelSource.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((newLabel: string) => this.service.isLabelIpPairDuplicated('192.168.1.4', newLabel, [])),
+      switchMap((newLabel: string) => this.inventoryService.isLabelIpPairDuplicated('192.168.1.4', newLabel, [])),
       tap(duplicated => this.hasLabelError = duplicated)
     );
   }
@@ -161,12 +177,12 @@ export class EditAsDraftDialogComponent implements OnInit {
 
     switch (this.data.type) {
       case DialogType.EditDraft:
-        this.service.saveDraft(shortDraft).subscribe(() => this.dialogRef.close(DialogAction.Save));
+        this.inventoryService.saveDraft(shortDraft).subscribe(() => this.dialogRef.close(DialogAction.Save));
         break;
 
       case DialogType.CreateNewDraft:
       case DialogType.EditConfigurationAsDraft:
-        this.service.createDraft(shortDraft).subscribe(() => this.dialogRef.close());
+        this.inventoryService.createDraft(shortDraft).subscribe(() => this.dialogRef.close());
         break;
     }
   }
@@ -180,7 +196,7 @@ export class EditAsDraftDialogComponent implements OnInit {
       content: this.formGroup.get('content').value
     };
 
-    this.service.uploadDraft(shortDraft).subscribe(() => this.dialogRef.close(DialogAction.SaveAndUpload));
+    this.inventoryService.uploadDraft(shortDraft).subscribe(() => this.dialogRef.close(DialogAction.SaveAndUpload));
   }
 
 }

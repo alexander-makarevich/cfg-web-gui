@@ -1,5 +1,7 @@
 import {NgxMonacoEditorConfig} from "ngx-monaco-editor";
 import {of} from "rxjs";
+// import IMarkerData = monaco.editor.IMarkerData;
+// import MarkerSeverity = monaco.MarkerSeverity;
 
 function State() {
   this.clone = () => new State();
@@ -15,6 +17,15 @@ class MyState implements monaco.languages.IState {
     return false;
   }
 }
+
+// const marker: IMarkerData = {
+// endColumn: 10,
+//   endLineNumber:12,
+// message: 'message',
+//   severity: MarkerSeverity.Error,
+//   startColumn: 0,
+//   startLineNumber: 11,
+// };
 
 export const clishLanguageId = 'clishLanguage';
 const commands: string[] = ['hostname', 'system', 'object-group network', 'ip address-range', 'security zone-pair', 'rule', 'action', 'match protocol', 'match source-address', 'exit',];

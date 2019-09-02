@@ -212,7 +212,7 @@ export const commands01: string[] = [
   'system fan-speed auto',
   '',
   'object-group network server_COA',
-  '  ip address-range 192.168.26.153',
+  '  ip address-range 192.168.26.653',
   'exit',
   '',
   'security zone-pair trusted untrusted',
