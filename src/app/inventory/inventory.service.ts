@@ -204,6 +204,26 @@ export const commands05: string[] = [
 export const commands06: string[] = commands05.concat(['enable sercer 5 jia8fmm23n32', 'enable password 7 asdfj']);
 export const commands07: string[] = commands06.concat(['aaa new-model', 'aaa authentication login default local enable']);
 
+export const commands01: string[] = [
+  '#!/usr/bin/clish',
+  '#12',
+  'hostname ESR-MAINA',
+  '',
+  'system fan-speed auto',
+  '',
+  'object-group network server_COA',
+  '  ip address-range 192.168.26.153',
+  'exit',
+  '',
+  'security zone-pair trusted untrusted',
+  '  rule 1',
+  '    action permit',
+  '    match protocol any',
+  '    match source-address any',
+  '  exit',
+  'exit',
+];
+
 export const CONFIG_DATA: Configuration[] = [{
   ip: '192.168.1.1',
   type: 'Running',
@@ -409,7 +429,7 @@ export const DRAFT_DATA: Draft[] = [{
   ip: '192.168.1.1',
   updateTime: '2019-08-11T16:12:23',
   annotation: 'Черновик базовой рабочей конфигурации устройства 192.168.1.1',
-  commands: commands05
+  commands: commands01
 }, {
   id: 3,
   author: authors[2],

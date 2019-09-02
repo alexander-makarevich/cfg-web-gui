@@ -7,6 +7,7 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {Configuration, Draft, InventoryService, ShortDraft} from '../inventory.service';
 import {debounceTime, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
+import {clishLanguageId} from "./monaco-editor-config";
 
 export enum DialogAction {
   Cancel = 1,
@@ -61,7 +62,7 @@ export interface Fruit {
 })
 export class EditAsDraftDialogComponent implements OnInit {
   // editorOptions = {theme: 'vs', language: 'shell'};
-  editorOptions = {theme: 'vs', language: 'colorLanguage', colorDecorators: true, };
+  editorOptions = {theme: 'vs', language: clishLanguageId, colorDecorators: true, };
   editorValue = 'red\nblue\ngreen';
 
   visible = true;
@@ -137,7 +138,7 @@ export class EditAsDraftDialogComponent implements OnInit {
 
     this.formGroup.patchValue({
       ip: this.data.shortDraft.ip,
-      content: this.editorValue,// this.data.shortDraft.content,
+      content: this.data.shortDraft.content,
       annotation: this.data.type === DialogType.EditDraft ? this.data.shortDraft.annotation : '',
     });
 
