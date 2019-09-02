@@ -15,6 +15,20 @@ import {DraftsComponent} from './inventory/drafts/drafts.component';
 import {MonacoEditorModule, NgxMonacoEditorConfig} from 'ngx-monaco-editor';
 import {of} from "rxjs";
 
+function State() {
+  this.clone = () => new State();
+  this.equals = (other) => other === this;
+}
+
+class MyState implements monaco.languages.IState {
+  clone(): monaco.languages.IState {
+    return new MyState();
+  }
+
+  equals(other: monaco.languages.IState): boolean {
+    return false;
+  }
+}
 const monacoConfig: NgxMonacoEditorConfig = {
   defaultOptions: { scrollBeyondLastLine: false, automaticLayout: true }, // pass default options to be used
   // here monaco object will be available as window.monaco use this function to extend monaco editor functionalities.
@@ -22,6 +36,27 @@ const monacoConfig: NgxMonacoEditorConfig = {
     debugger;
     monaco.languages.register({
       id: "colorLanguage"
+    });
+
+    monaco.languages.setTokensProvider('colorLanguage', {
+      getInitialState: () => new MyState(),
+      tokenize(line: string, state: monaco.languages.IState): monaco.languages.ILineTokens {
+        console.log('tokenize: ', line);
+        if (line === "red") {
+          return {
+            tokens: [{
+              startIndex: 0,
+              scopes: 'comment'
+            }],
+            endState: new MyState()
+          };
+        } else {
+          return {
+            tokens: [],
+            endState: new MyState()
+          }
+        }
+      }
     });
 
     monaco.languages.registerColorProvider("colorLanguage", {
