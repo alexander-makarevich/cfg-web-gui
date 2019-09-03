@@ -95,6 +95,43 @@ export const monacoConfig: NgxMonacoEditorConfig = {
       }
     });
 
+
+    function createDependencyProposals() {
+      // returning a static list of proposals, not even looking at the prefix (filtering is done by the Monaco editor),
+      // here you could do a server side lookup
+      return [
+        {
+          label: '"ip address-range"',
+          kind: monaco.languages.CompletionItemKind.Function,
+          documentation: "The Lodash library exported as Node.js modules.",
+          insertText: '  ip address-range'
+        },
+        {
+          label: '"ip"',
+          kind: monaco.languages.CompletionItemKind.Function,
+          documentation: "Fast, unopinionated, minimalist web framework",
+          insertText: '  ip'
+        },
+        {
+          label: '"ip address-range 192.168.26.653"',
+          kind: monaco.languages.CompletionItemKind.Function,
+          documentation: "Recursively mkdir, like <code>mkdir -p</code>",
+          insertText: '  ip address-range 192.168.26.653'
+        }
+      ];
+    }
+
+    monaco.languages.registerCompletionItemProvider(clishLanguageId, {
+      provideCompletionItems: function(model, position) {
+        // find out if we are completing a property in the 'dependencies' object.
+        const match = (position.lineNumber === 8 && position.column >= 3 && position.column <= 19);
+        const suggestions = match ? createDependencyProposals() : [];
+        return {
+          suggestions: suggestions
+        };
+      }
+    });
+
     monaco.languages.registerColorProvider(clishLanguageId, {
       provideColorPresentations: () => {
         return [
