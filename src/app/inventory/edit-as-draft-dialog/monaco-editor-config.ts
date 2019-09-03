@@ -78,6 +78,23 @@ export const monacoConfig: NgxMonacoEditorConfig = {
       }
     });
 
+    monaco.languages.registerHoverProvider(clishLanguageId, {
+      provideHover: function (model, position) {
+        if (position.lineNumber === 8 && position.column >= 3 && position.column <= 19) {
+          return of(
+            {
+              range: new monaco.Range(8, 3, 8, 19),
+              contents: [
+                {value: '**ip address-range**'},
+                {value: '```html\n' + 'Без понятия для чего нужна эта команда' + '\n```'},
+                {value: 'Список параметров:\n* параметр 1 - неизвестен\n* параметр 2 - неизвестен\n* параметр 3 - неизвестен' + '\n```'},
+              ]
+            }
+          ).toPromise();
+        }
+      }
+    });
+
     monaco.languages.registerColorProvider(clishLanguageId, {
       provideColorPresentations: () => {
         return [
