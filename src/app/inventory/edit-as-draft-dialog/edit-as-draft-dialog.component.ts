@@ -5,9 +5,9 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 
 import {Configuration, Draft, InventoryService, ShortDraft} from '../inventory.service';
-import {debounceTime, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, delay, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
-import {clishLanguageId} from "./monaco-editor-config";
+import {clishLanguageId, monacoEditorLag} from "./monaco-editor-config";
 import {ClishService} from "./clish.service";
 
 export enum DialogAction {
@@ -47,24 +47,13 @@ export interface DialogData {
   shortDraft: ShortDraft;
 }
 
-export interface ReturnedDialogData {
-  action: DialogAction;
-  allAvailableDrafts: Draft[] | null;
-}
-
-export interface Fruit {
-  name: string;
-}
-
 @Component({
   selector: 'app-edit-as-draft-dialog',
   templateUrl: './edit-as-draft-dialog.component.html',
   styleUrls: ['./edit-as-draft-dialog.component.scss']
 })
 export class EditAsDraftDialogComponent implements OnInit {
-  // editorOptions = {theme: 'vs', language: 'shell'};
   editorOptions = {theme: 'vs', language: clishLanguageId, colorDecorators: true, };
-  editorValue = 'red\nblue\ngreen';
 
   visible = true;
   selectable = true;
@@ -92,23 +81,20 @@ export class EditAsDraftDialogComponent implements OnInit {
               private clishService: ClishService) {
   }
 
-  onInit(editor) {
+  onMonacoEditorInit(editor) {
     const model = editor.getModel();
+    const configuration = editor.getValue();
+
+    this.clishService.getMarkers(configuration)
+      .pipe(delay(monacoEditorLag))
+      .subscribe(markers => monaco.editor.setModelMarkers(model, clishLanguageId, markers));
+
     model.onDidChangeContent((a) => {
-      const v = editor.getValue();
-      this.clishService.getMarkers(v)
+      const configuration = editor.getValue();
+      this.clishService.getMarkers(configuration)
+        .pipe(delay(monacoEditorLag))
         .subscribe(markers => monaco.editor.setModelMarkers(model, clishLanguageId, markers));
     });
-
-    const marker: monaco.editor.IMarkerData = {
-      endColumn: 34,
-      endLineNumber: 8,
-      message: 'Invalid IP address',
-      severity: monaco.MarkerSeverity.Error,
-      startColumn: 20,
-      startLineNumber: 8,
-    };
-    monaco.editor.setModelMarkers(model, clishLanguageId, [marker]);
   }
 
   /**

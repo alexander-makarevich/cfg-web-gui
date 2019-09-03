@@ -1,12 +1,5 @@
 import {NgxMonacoEditorConfig} from "ngx-monaco-editor";
 import {of} from "rxjs";
-// import IMarkerData = monaco.editor.IMarkerData;
-// import MarkerSeverity = monaco.MarkerSeverity;
-
-function State() {
-  this.clone = () => new State();
-  this.equals = (other) => other === this;
-}
 
 class MyState implements monaco.languages.IState {
   clone(): monaco.languages.IState {
@@ -18,14 +11,15 @@ class MyState implements monaco.languages.IState {
   }
 }
 
-// const marker: IMarkerData = {
-// endColumn: 10,
-//   endLineNumber:12,
-// message: 'message',
-//   severity: MarkerSeverity.Error,
-//   startColumn: 0,
-//   startLineNumber: 11,
-// };
+/**
+ * Отчего-то monaco-editor ломается если применять маркеры сразу после событий onMonacoEditorInit или
+ * onDidChangeContent, задержка помогла.
+ * Смотрел в примере: https://github.com/nmanumr/monaco-basic/blob/master/src/languageFeatures.ts#L42:
+ * @code:
+ * model.onDidChangeContent(() => {
+ *   handle = setTimeout(() => this._doValidate(model.uri, modeId), 500);
+ */
+export const monacoEditorLag = 500;
 
 export const clishLanguageId = 'clishLanguage';
 const commands: string[] = ['hostname', 'system', 'object-group network', 'ip address-range', 'security zone-pair', 'rule', 'action', 'match protocol', 'match source-address', 'exit',];

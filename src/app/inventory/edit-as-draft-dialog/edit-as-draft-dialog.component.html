@@ -28,7 +28,7 @@
     <textarea matInput placeholder="Annotation" formControlName="annotation"></textarea>
   </mat-form-field>
 
-  <ngx-monaco-editor class="my-code-editor" (onInit)="onInit($event)" [options]="editorOptions" formControlName="content"></ngx-monaco-editor>
+  <ngx-monaco-editor class="my-code-editor" (onInit)="onMonacoEditorInit($event)" [options]="editorOptions" formControlName="content"></ngx-monaco-editor>
 </mat-dialog-content>
 
 <mat-dialog-actions>
