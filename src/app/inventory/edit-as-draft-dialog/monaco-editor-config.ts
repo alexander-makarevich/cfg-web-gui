@@ -105,25 +105,43 @@ export const monacoConfig: NgxMonacoEditorConfig = {
           label: '"ip address-range"',
           kind: monaco.languages.CompletionItemKind.Function,
           documentation: 'The Lodash library exported as Node.js modules.',
-          insertText: '  ip address-range'
+          insertText: '  ip address-range',
+          range: {
+            startLineNumber: 8,
+            endLineNumber: 8,
+            startColumn: 3,
+            endColumn: 19,
+          }
         },
         {
           label: '"ip"',
           kind: monaco.languages.CompletionItemKind.Function,
           documentation: 'Fast, unopinionated, minimalist web framework',
-          insertText: '  ip'
+          insertText: '  ip',
+          range: {
+            startLineNumber: 8,
+            endLineNumber: 8,
+            startColumn: 3,
+            endColumn: 19,
+          }
         },
         {
           label: '"ip address-range 192.168.26.653"',
           kind: monaco.languages.CompletionItemKind.Function,
           documentation: 'Recursively mkdir, like <code>mkdir -p</code>',
-          insertText: '  ip address-range 192.168.26.653'
+          insertText: '  ip address-range 192.168.26.653',
+          range: {
+            startLineNumber: 8,
+            endLineNumber: 8,
+            startColumn: 3,
+            endColumn: 19,
+          }
         }
       ];
     }
 
     monaco.languages.registerCompletionItemProvider(clishLanguageId, {
-      provideCompletionItems: (model, position) => {
+      provideCompletionItems: (model, position, context, token) => {
         // find out if we are completing a property in the 'dependencies' object.
         const match = (position.lineNumber === 8 && position.column >= 3 && position.column <= 19);
         const suggestions = match ? createDependencyProposals() : [];
