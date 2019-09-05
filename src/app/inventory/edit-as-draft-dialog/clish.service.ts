@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from "rxjs";
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,6 @@ export class ClishService {
       startColumn: 20,
       startLineNumber: 8,
     }];
-    return of(configuration.includes('192.168.26.653') ? errorMarkers: []);
+    return of(configuration.includes('192.168.26.653') ? errorMarkers : []);
   }
 }

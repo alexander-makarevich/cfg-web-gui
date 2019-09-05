@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 import {Configuration, InventoryService} from '../inventory/inventory.service';
 import {DiffEditorModel} from 'ngx-monaco-editor';
 
 export interface DialogData {
-  configuration: Configuration,
+  configuration: Configuration;
 }
 
 @Component({
@@ -38,7 +38,7 @@ export class DiffDialogComponent implements OnInit {
 
     this.service
       .getConfiguration(configuration.ip, versionBefore)
-      .subscribe(configuration => console.log('DiffDialogComponent: ', configuration, this.data.configuration));
+      .subscribe(cfg => console.log('DiffDialogComponent: ', cfg, this.data.configuration));
   }
 
 }

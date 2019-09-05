@@ -7,8 +7,8 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {Configuration, Draft, InventoryService, ShortDraft} from '../inventory.service';
 import {debounceTime, delay, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
-import {clishLanguageId, monacoEditorLag} from "./monaco-editor-config";
-import {ClishService} from "./clish.service";
+import {clishLanguageId, monacoEditorLag} from './monaco-editor-config';
+import {ClishService} from './clish.service';
 
 export enum DialogAction {
   Cancel = 1,
@@ -90,8 +90,8 @@ export class EditAsDraftDialogComponent implements OnInit {
       .subscribe(markers => monaco.editor.setModelMarkers(model, clishLanguageId, markers));
 
     model.onDidChangeContent((a) => {
-      const configuration = editor.getValue();
-      this.clishService.getMarkers(configuration)
+      const cfg = editor.getValue();
+      this.clishService.getMarkers(cfg)
         .pipe(delay(monacoEditorLag))
         .subscribe(markers => monaco.editor.setModelMarkers(model, clishLanguageId, markers));
     });

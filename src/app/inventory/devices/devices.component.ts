@@ -3,7 +3,7 @@ import {Device, DEVICE_DATA} from '../inventory.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material';
-import {DiffDialogComponent} from "../../diff-dialog/diff-dialog.component";
+import {DiffDialogComponent} from '../../diff-dialog/diff-dialog.component';
 
 @Component({
   selector: 'app-devices',

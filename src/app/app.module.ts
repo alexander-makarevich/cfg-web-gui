@@ -13,7 +13,7 @@ import {LabelConfigDialogComponent} from './inventory/label-config-dialog/label-
 import {EditAsDraftDialogComponent} from './inventory/edit-as-draft-dialog/edit-as-draft-dialog.component';
 import {DraftsComponent} from './inventory/drafts/drafts.component';
 import {MonacoEditorModule} from 'ngx-monaco-editor';
-import {monacoConfig} from "./inventory/edit-as-draft-dialog/monaco-editor-config";
+import {monacoConfig} from './inventory/edit-as-draft-dialog/monaco-editor-config';
 import {DiffDialogComponent} from './diff-dialog/diff-dialog.component';
 
 @NgModule({

@@ -10,7 +10,7 @@ import {
   DialogType,
   EditAsDraftDialogComponent, transformConfigurationToShortDraft
 } from '../edit-as-draft-dialog/edit-as-draft-dialog.component';
-import {DiffDialogComponent} from "../../diff-dialog/diff-dialog.component";
+import {DiffDialogComponent} from '../../diff-dialog/diff-dialog.component';
 
 
 @Component({

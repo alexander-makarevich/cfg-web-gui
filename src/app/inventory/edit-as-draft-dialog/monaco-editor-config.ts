@@ -1,5 +1,5 @@
-import {NgxMonacoEditorConfig} from "ngx-monaco-editor";
-import {of} from "rxjs";
+import {NgxMonacoEditorConfig} from 'ngx-monaco-editor';
+import {of} from 'rxjs';
 
 class MyState implements monaco.languages.IState {
   clone(): monaco.languages.IState {
@@ -22,7 +22,8 @@ class MyState implements monaco.languages.IState {
 export const monacoEditorLag = 500;
 
 export const clishLanguageId = 'clishLanguage';
-const commands: string[] = ['hostname', 'system', 'object-group network', 'ip address-range', 'security zone-pair', 'rule', 'action', 'match protocol', 'match source-address', 'exit',];
+const commands: string[] = ['hostname', 'system', 'object-group network', 'ip address-range', 'security zone-pair',
+  'rule', 'action', 'match protocol', 'match source-address', 'exit', ];
 
 export const monacoConfig: NgxMonacoEditorConfig = {
   defaultOptions: { scrollBeyondLastLine: false, automaticLayout: true }, // pass default options to be used
@@ -43,7 +44,7 @@ export const monacoConfig: NgxMonacoEditorConfig = {
               scopes: 'metatag'
             }],
             endState: new MyState()
-          }
+          };
         }
 
         if (line.match(/(^#.*$)/) !== null) {
@@ -53,12 +54,12 @@ export const monacoConfig: NgxMonacoEditorConfig = {
               scopes: 'comment'
             }],
             endState: new MyState()
-          }
+          };
         }
 
         const tokens = [];
-        for (let command of commands) {
-          const match = line.match('^(\\s*'+command+')');
+        for (const command of commands) {
+          const match = line.match('^(\\s*' + command + ')');
           if (match) {
             tokens.push({
                 startIndex: 0,
@@ -72,14 +73,14 @@ export const monacoConfig: NgxMonacoEditorConfig = {
         }
 
         return {
-          tokens: tokens,
-          endState: new MyState()
+          tokens,
+          endState: new MyState(),
         };
       }
     });
 
     monaco.languages.registerHoverProvider(clishLanguageId, {
-      provideHover: function (model, position) {
+      provideHover: (model, position) => {
         if (position.lineNumber === 8 && position.column >= 3 && position.column <= 19) {
           return of(
             {
@@ -103,31 +104,31 @@ export const monacoConfig: NgxMonacoEditorConfig = {
         {
           label: '"ip address-range"',
           kind: monaco.languages.CompletionItemKind.Function,
-          documentation: "The Lodash library exported as Node.js modules.",
+          documentation: 'The Lodash library exported as Node.js modules.',
           insertText: '  ip address-range'
         },
         {
           label: '"ip"',
           kind: monaco.languages.CompletionItemKind.Function,
-          documentation: "Fast, unopinionated, minimalist web framework",
+          documentation: 'Fast, unopinionated, minimalist web framework',
           insertText: '  ip'
         },
         {
           label: '"ip address-range 192.168.26.653"',
           kind: monaco.languages.CompletionItemKind.Function,
-          documentation: "Recursively mkdir, like <code>mkdir -p</code>",
+          documentation: 'Recursively mkdir, like <code>mkdir -p</code>',
           insertText: '  ip address-range 192.168.26.653'
         }
       ];
     }
 
     monaco.languages.registerCompletionItemProvider(clishLanguageId, {
-      provideCompletionItems: function(model, position) {
+      provideCompletionItems: (model, position) => {
         // find out if we are completing a property in the 'dependencies' object.
         const match = (position.lineNumber === 8 && position.column >= 3 && position.column <= 19);
         const suggestions = match ? createDependencyProposals() : [];
         return {
-          suggestions: suggestions
+          suggestions,
         };
       }
     });
@@ -136,7 +137,7 @@ export const monacoConfig: NgxMonacoEditorConfig = {
       provideColorPresentations: () => {
         return [
           {
-            label: "color picker title text"
+            label: 'color picker title text'
           }
         ];
       },

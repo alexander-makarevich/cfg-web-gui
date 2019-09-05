@@ -546,7 +546,7 @@ export class InventoryService {
   getConfiguration(ip: string, version: string) {
     const filtered = this.configurations
       .filter(configuration => configuration.ip === ip && configuration.version === version);
-    const configuration: Configuration | null = filtered ? {...filtered[0]} : null;
-    return of(configuration);
+    const cfg: Configuration | null = filtered ? {...filtered[0]} : null;
+    return of(cfg);
   }
 }
