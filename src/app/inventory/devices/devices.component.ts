@@ -3,8 +3,7 @@ import {Device, DEVICE_DATA} from '../inventory.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material';
-import {LabelConfigDialogComponent} from '../label-config-dialog/label-config-dialog.component';
-import {EditAsDraftDialogComponent} from '../edit-as-draft-dialog/edit-as-draft-dialog.component';
+import {DiffDialogComponent} from "../../diff-dialog/diff-dialog.component";
 
 @Component({
   selector: 'app-devices',
@@ -41,6 +40,14 @@ export class DevicesComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+  }
+
+  openDiffDialog() {
+    this.dialog.open(DiffDialogComponent, {
+      width: '90%',
+      data: {},
+    }).afterClosed().subscribe();
+
   }
 
 }

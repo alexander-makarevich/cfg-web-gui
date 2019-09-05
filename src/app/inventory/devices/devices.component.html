@@ -1,6 +1,12 @@
 <mat-toolbar>
 <button mat-button [matMenuTriggerFor]="menu">Команда...</button>
 <mat-menu #menu="matMenu">
+  <div matTooltip="Selected not one draft" [matTooltipDisabled]="selection.selected.length === 1">
+    <button mat-menu-item [disabled]="selection.selected.length !== 1" (click)="openDiffDialog()">
+      <mat-icon>sync_alt</mat-icon>
+      <span>Diff</span>
+    </button>
+  </div>
 </mat-menu>
 </mat-toolbar>
 

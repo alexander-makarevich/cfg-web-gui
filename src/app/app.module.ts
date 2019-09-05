@@ -14,6 +14,7 @@ import {EditAsDraftDialogComponent} from './inventory/edit-as-draft-dialog/edit-
 import {DraftsComponent} from './inventory/drafts/drafts.component';
 import {MonacoEditorModule} from 'ngx-monaco-editor';
 import {monacoConfig} from "./inventory/edit-as-draft-dialog/monaco-editor-config";
+import {DiffDialogComponent} from './diff-dialog/diff-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {monacoConfig} from "./inventory/edit-as-draft-dialog/monaco-editor-confi
     LabelConfigDialogComponent,
     EditAsDraftDialogComponent,
     DraftsComponent,
+    DiffDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,7 @@ import {monacoConfig} from "./inventory/edit-as-draft-dialog/monaco-editor-confi
   entryComponents: [
     EditAsDraftDialogComponent,
     LabelConfigDialogComponent,
+    DiffDialogComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
