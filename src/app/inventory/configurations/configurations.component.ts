@@ -10,6 +10,7 @@ import {
   DialogType,
   EditAsDraftDialogComponent, transformConfigurationToShortDraft
 } from '../edit-as-draft-dialog/edit-as-draft-dialog.component';
+import {DiffDialogComponent} from "../../diff-dialog/diff-dialog.component";
 
 
 @Component({
@@ -75,6 +76,14 @@ export class ConfigurationsComponent implements OnInit {
         this.dataSource.data = CONFIG_DATA;
       }
     });
+  }
+
+  openDiffDialog() {
+    const configuration = this.selection.selected[0];
+    this.dialog.open(DiffDialogComponent, {
+      width: '90%',
+      data: {configuration, },
+    }).afterClosed().subscribe();
   }
 
 }

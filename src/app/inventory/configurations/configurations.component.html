@@ -9,6 +9,12 @@
       <mat-icon>edit</mat-icon>
       <span>Редактировать конфигурацию</span>
     </button>
+    <div matTooltip="Selected not one configuration" [matTooltipDisabled]="selection.selected.length === 1">
+      <button mat-menu-item [disabled]="selection.selected.length !== 1" (click)="openDiffDialog()">
+        <mat-icon>sync_alt</mat-icon>
+        <span>Diff</span>
+      </button>
+    </div>
   </mat-menu>
 </mat-toolbar>
 
